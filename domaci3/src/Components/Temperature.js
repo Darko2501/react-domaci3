@@ -24,8 +24,8 @@ function Temperature(){
                   </tr>
                 </thead>
                 <tbody>
-                 {sites.map((site, index) => (
-              <tr key={index}>
+                 {sites.map((site) => (
+              <tr>
                 <td>{site.state}</td>
                 <td>{site.city}</td>
                 <td>{site.temp} °C</td>
