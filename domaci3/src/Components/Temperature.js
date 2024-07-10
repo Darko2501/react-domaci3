@@ -1,68 +1,100 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Temperature(){
-  let[state,setState]=useState('');
-  let[city,setCity]=useState('');
-  let[temp,setTemp]=useState('');
-  let[sites,newSites]=useState([]);
-  function addNew(e){
+function Temperature() {
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [temp, setTemp] = useState('');
+  const [place, setPlace] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  function addNew(e) {
     e.preventDefault();
-    const newSite={state,city,temp};
-    newSites([...sites,newSite])
-  };
-    return(
-        <>
-        <div className="container">
-        
-              <table  className="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Country</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Temperature</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 {sites.map((site) => (
-              <tr>
-                <td>{site.state}</td>
-                <td>{site.city}</td>
-                <td>{site.temp} °C</td>
+    const newPlace = { state, city, temp };
+    setSites([...place, newPlace]);
+    setState('');
+    setCity('');
+    setTemp('');
+    setShowForm(false); 
+  }
+
+  function toggleForm() {
+    setShowForm(!showForm);
+  }
+
+  return (
+    <>
+      <div className="container">
+        <h1>Places and Temperatures:</h1>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Country</th>
+              <th scope="col">City</th>
+              <th scope="col">Temperature</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sites.map((place, index) => (
+              <tr key={index}>
+                <td>{place.state}</td>
+                <td>{place.city}</td>
+                <td>{place.temp} °C</td>
               </tr>
             ))}
           </tbody>
-              </table>
-            
-          <h1>Add new sites:</h1>
-          
-          <form>
-          
+        </table>
+
+        <button className="btn btn-primary mb-3" onClick={toggleForm}>
+          {showForm ? 'Hide Form' : 'Add New Place'}
+        </button>
+
+        {showForm && (
+          <form onSubmit={addNew}> 
             <div className="mb-3">
-              <label htmlFor="stateInput" className="form-label">State:</label>
-              <input onInput={(e)=>setState(e.target.value)} type="text" className="form-control" id="stateInput" aria-describedby="emailHelp" />
-          
+              <label htmlFor="stateInput" className="form-label">
+                State:
+              </label>
+              <input
+                onChange={(e) => setState(e.target.value)}
+                type="text"
+                className="form-control"
+                id="stateInput"
+                value={state}
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="cityInput" className="form-label">City</label>
-              <input onInput={(e)=>setCity(e.target.value)} type="text" className="form-control" id="cityInput" />
+              <label htmlFor="cityInput" className="form-label">
+                City:
+              </label>
+              <input
+                onChange={(e) => setCity(e.target.value)}
+                type="text"
+                className="form-control"
+                id="cityInput"
+                value={city}
+              />
             </div>
             <div className="mb-3">
-              <label className="form-check-label" htmlFor="inputTemperature">Temperature:</label>
-              <input onInput={(e)=>setTemp(e.target.value)} type="text" className="form-control" id="inputTemperature" />
-          
+              <label htmlFor="inputTemperature" className="form-label">
+                Temperature:
+              </label>
+              <input
+                onChange={(e) => setTemp(e.target.value)}
+                type="text"
+                className="form-control"
+                id="inputTemperature"
+                value={temp}
+              />
             </div>
-            <div className="d-grid gap-2">
-            <button onClick={addNew} type="submit" className="btn btn-primary">ADD</button>
-  
-            </div>
-            
+            <button type="submit" className="btn btn-primary">
+              Add
+            </button>
           </form>
-        </div>
-
-        </>
-    )
-
+        )}
+      </div>
+    </>
+  );
 }
 
 export default Temperature;
