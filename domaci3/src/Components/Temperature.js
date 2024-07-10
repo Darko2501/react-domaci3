@@ -11,7 +11,7 @@ function Temperature() {
   function addNew(e) {
     e.preventDefault();
     const newPlace = { state, city, temp };
-    setSites([...place, newPlace]);
+    setPlace([...place, newPlace]);
     setState('');
     setCity('');
     setTemp('');
