@@ -35,7 +35,7 @@ function Temperature() {
             </tr>
           </thead>
           <tbody>
-            {sites.map((place, index) => (
+            {place.map((place, index) => (
               <tr key={index}>
                 <td>{place.state}</td>
                 <td>{place.city}</td>
